@@ -9,7 +9,9 @@ public class localChar : MonoBehaviour {
     public float xRotation = 0f;
     public float lookSensitivity = 8f;
     public float walkspeed = 7.0f;
+    public float walkaccel = 75f;
     public float flyspeed = 2f;
+    public float flyaccel = 15f;
     
     private bool ong;
 
@@ -25,7 +27,7 @@ public class localChar : MonoBehaviour {
         return Physics.Raycast(transform.position + Vector3.up, -Vector3.up, 1.01f);
     }
 
-private void FixedUpdate() {
+    private void FixedUpdate() {
 
         if (transform.position.y < -100) {
             transform.position = Vector3.up;
@@ -55,25 +57,26 @@ private void FixedUpdate() {
         Vector3 mov = (Input.GetAxisRaw("Horizontal") * transform.right) + (Input.GetAxisRaw("Vertical") * transform.forward);
 
         if (ong) {
-                float targxspeed = (mov.x * walkspeed);
-            if (Mathf.Abs(rb.velocity.x) + 0.1f < Mathf.Abs(targxspeed)) {
-                rb.velocity = new Vector3(targxspeed, rb.velocity.y, rb.velocity.z);
-            }
-
-                float targzspeed = (mov.z * walkspeed);
-            if (Mathf.Abs(rb.velocity.z) - 0.1f < Mathf.Abs(targzspeed)) {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, targzspeed);
-            }
+            //    float targxspeed = (mov.x * walkspeed);
+            //if (Mathf.Abs(rb.velocity.x) - 0.1f < Mathf.Abs(targxspeed)) {
+            //    rb.velocity = new Vector3(targxspeed, rb.velocity.y, rb.velocity.z);
+            //}
+            //
+            //    float targzspeed = (mov.z * walkspeed);
+            //if (Mathf.Abs(rb.velocity.z) - 0.1f < Mathf.Abs(targzspeed)) {
+            //    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, targzspeed);
+            //}
+            rb.velocity = new Vector3(
+                Mathf.Clamp(rb.velocity.x + (mov.x * walkaccel * Time.deltaTime), -walkspeed, walkspeed),
+                rb.velocity.y,
+                Mathf.Clamp(rb.velocity.z + (mov.z * walkaccel * Time.deltaTime), -walkspeed, walkspeed)
+                );
         } else {
-                float targxspeed = (mov.x * flyspeed);
-            if (Mathf.Abs(rb.velocity.x) - 0.1f < Mathf.Abs(targxspeed)) {
-                rb.velocity = new Vector3(targxspeed, rb.velocity.y, rb.velocity.z);
-            }
-
-                float targzspeed = (mov.z * flyspeed);
-            if (Mathf.Abs(rb.velocity.z) - 0.1f < Mathf.Abs(targzspeed)) {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, targzspeed);
-            }
+            rb.velocity = new Vector3(
+                Mathf.Clamp(rb.velocity.x + (mov.x * flyaccel * Time.deltaTime), -flyspeed, flyspeed),
+                rb.velocity.y,
+                Mathf.Clamp(rb.velocity.z + (mov.z * flyaccel * Time.deltaTime), -flyspeed, flyspeed)
+                );
         }
     }
 }

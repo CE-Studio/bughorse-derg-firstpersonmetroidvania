@@ -301,7 +301,9 @@ MonoBehaviour:
   xRotation: 0
   lookSensitivity: 8
   walkspeed: 4
+  walkaccel: 75
   flyspeed: 2
+  flyaccel: 15
 --- !u!1001 &296138508
 PrefabInstance:
   m_ObjectHideFlags: 0
