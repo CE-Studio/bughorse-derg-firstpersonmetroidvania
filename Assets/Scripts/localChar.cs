@@ -26,6 +26,11 @@ public class localChar : MonoBehaviour {
     }
 
 private void FixedUpdate() {
+
+        if (transform.position.y < -100) {
+            transform.position = Vector3.up;
+        }
+
         ong = isGrounded();
         if (ong && (Input.GetAxis("Jump") >= 0.9f)) {
             rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
@@ -46,7 +51,7 @@ private void FixedUpdate() {
         }
         transform.Rotate(Vector3.up * mouseX);
 
-        float curspeed = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.y), 2));
+        //float curspeed = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.y), 2));
         Vector3 mov = (Input.GetAxisRaw("Horizontal") * transform.right) + (Input.GetAxisRaw("Vertical") * transform.forward);
 
         if (ong) {
