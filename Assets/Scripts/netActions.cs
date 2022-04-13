@@ -5,7 +5,7 @@ using Unity.Netcode;
 
 public class netActions:MonoBehaviour {
 
-    public static bool playmode;
+    public static bool playmode = false;
     public NetworkManager nm;
     public NetworkTransport nt;
 
@@ -14,7 +14,9 @@ public class netActions:MonoBehaviour {
     }
 
 
-    void Update() {
-
+    void OnGUI() {
+        if (nm.IsServer! && nm.IsClient!) {
+            
+        }
     }
 }

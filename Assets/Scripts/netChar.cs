@@ -28,7 +28,8 @@ public class netChar : NetworkBehaviour {
     private bool ong;
 
     public void onPosUpdate(Vector3 last, Vector3 cur) {
-        rb.position = pos.Value;
+        //rb.position = pos.Value;
+        rb.MovePosition(pos.Value);
     }
 
     public void onVelUpdate(Vector3 last, Vector3 cur) {
