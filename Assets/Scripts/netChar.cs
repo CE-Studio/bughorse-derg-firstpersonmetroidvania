@@ -22,15 +22,23 @@ public class netChar : NetworkBehaviour {
     public NetworkVariable<Vector3> pos = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> mom = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<Quaternion> rot = new NetworkVariable<Quaternion>(Quaternion.Euler(0, 0, 0), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Vector3> rot = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private bool ong;
+
+    public void onNetUpdate(Vector3 last, Vector3 cur) {
+        rb.position = pos.Value;
+        rb.velocity = vel.Value;
+        rb.angularVelocity = mom.Value;
+        rb.rotation = Quaternion.Euler(rot.Value);
+    }
 
     public override void OnNetworkSpawn() {
         if (IsOwner) {
             Cursor.lockState = CursorLockMode.Locked;
             rb.sleepThreshold = 0.0f;
         } else {
+            vel.OnValueChanged += onNetUpdate;
             cam.targetTexture = otherVeiw;
             al.enabled = false;
         }
@@ -107,12 +115,12 @@ public class netChar : NetworkBehaviour {
             pos.Value = rb.position;
             vel.Value = rb.velocity;
             vel.Value = rb.angularVelocity;
-            rot.Value = rb.rotation;
+            rot.Value = rb.rotation.eulerAngles;
         } else {
-            rb.position = pos.Value;
-            rb.velocity = vel.Value;
-            rb.angularVelocity = mom.Value;
-            rb.rotation.SetEulerRotation(rot.Value.eulerAngles);
+            //rb.position = pos.Value;
+            //rb.velocity = vel.Value;
+            //rb.angularVelocity = mom.Value;
+            //rb.rotation = Quaternion.Euler(rot.Value);
         }
     }
 
