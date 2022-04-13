@@ -60,6 +60,7 @@ public class netChar : NetworkBehaviour {
             camrot.OnValueChanged += onCamRotUpdate;
             cam.targetTexture = otherVeiw;
             al.enabled = false;
+            rb.isKinematic = true;
         }
         syncPos();
     }
