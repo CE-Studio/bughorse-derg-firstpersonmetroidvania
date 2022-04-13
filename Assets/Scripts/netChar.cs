@@ -34,17 +34,18 @@ public class netChar : NetworkBehaviour {
             cam.targetTexture = otherVeiw;
             al.enabled = false;
         }
+        syncPos();
     }
 
-    void Start() {
-        if (IsOwner) {
-            Cursor.lockState = CursorLockMode.Locked;
-            rb.sleepThreshold = 0.0f;
-        } else {
-            cam.targetTexture = otherVeiw;
-            al.enabled = false;
-        }
-    }
+    //void Start() {
+    //    if (IsOwner) {
+    //        Cursor.lockState = CursorLockMode.Locked;
+    //        rb.sleepThreshold = 0.0f;
+    //    } else {
+    //        cam.targetTexture = otherVeiw;
+    //        al.enabled = false;
+    //    }
+    //}
 
     void Update() {
         if (IsOwner) {
