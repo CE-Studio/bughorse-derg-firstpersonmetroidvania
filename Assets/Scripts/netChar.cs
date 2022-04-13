@@ -19,10 +19,10 @@ public class netChar : NetworkBehaviour {
     public float flyspeed = 2f;
     public float flyaccel = 15f;
 
-    public NetworkVariable<Vector3> pos = new NetworkVariable<Vector3>();
-    public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>();
-    public NetworkVariable<Vector3> mom = new NetworkVariable<Vector3>();
-    public NetworkVariable<Quaternion> rot = new NetworkVariable<Quaternion>();
+    public NetworkVariable<Vector3> pos = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Vector3> mom = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Quaternion> rot = new NetworkVariable<Quaternion>(Quaternion.Euler(0, 0, 0), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private bool ong;
 
@@ -99,20 +99,20 @@ public class netChar : NetworkBehaviour {
                 rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
             }
         }
-        //syncPos();
+        syncPos();
     }
 
     void syncPos() {
         if (IsOwner) {
             pos.Value = rb.position;
             vel.Value = rb.velocity;
-            mom.Value = rb.angularVelocity;
+            vel.Value = rb.angularVelocity;
             rot.Value = rb.rotation;
         } else {
             rb.position = pos.Value;
             rb.velocity = vel.Value;
             rb.angularVelocity = mom.Value;
-            rb.rotation = rot.Value;
+            rb.rotation.SetEulerRotation(rot.Value.eulerAngles);
         }
     }
 
