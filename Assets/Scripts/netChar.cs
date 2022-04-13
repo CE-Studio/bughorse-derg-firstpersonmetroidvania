@@ -29,7 +29,11 @@ public class netChar : NetworkBehaviour {
 
     public void onPosUpdate(Vector3 last, Vector3 cur) {
         //rb.position = pos.Value;
-        rb.MovePosition(pos.Value);
+        rb.MovePosition(new Vector3(
+                rb.position.x + ((cur.x - rb.position.x) / 2),
+                rb.position.y + ((cur.y - rb.position.y) / 2),
+                rb.position.z + ((cur.z - rb.position.z) / 2)
+            ));
     }
 
     public void onVelUpdate(Vector3 last, Vector3 cur) {
