@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class localChar : MonoBehaviour {
 
     public Transform cam;
-    public float jumpStrength;
+    public float jumpStrength = 4;
     public float xRotation = 0f;
     public float lookSensitivity = 8f;
-    public float walkspeed = 7.0f;
+    public float walkspeed = 4f;
     public float walkaccel = 75f;
     public float flyspeed = 2f;
     public float flyaccel = 15f;
