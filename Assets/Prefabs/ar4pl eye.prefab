@@ -731,7 +731,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1544894478146682769}
   - component: {fileID: 9041250880097895714}
-  - component: {fileID: 7098471543146863205}
   - component: {fileID: 3270941807962616791}
   m_Layer: 0
   m_Name: Text (TMP)
@@ -800,14 +799,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!222 &7098471543146863205
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3755448967608814555}
-  m_CullTransparentMesh: 0
 --- !u!114 &3270941807962616791
 MonoBehaviour:
   m_ObjectHideFlags: 0
