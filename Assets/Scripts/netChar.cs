@@ -9,6 +9,7 @@ public class netChar : NetworkBehaviour {
     public Camera cam;
     public Transform camtf;
     public Rigidbody rb;
+    public AudioListener al;
 
     public float jumpStrength = 4;
     public float xRotation = 0f;
@@ -31,6 +32,17 @@ public class netChar : NetworkBehaviour {
             rb.sleepThreshold = 0.0f;
         } else {
             cam.targetTexture = otherVeiw;
+            al.enabled = false;
+        }
+    }
+
+    void Start() {
+        if (IsOwner) {
+            Cursor.lockState = CursorLockMode.Locked;
+            rb.sleepThreshold = 0.0f;
+        } else {
+            cam.targetTexture = otherVeiw;
+            al.enabled = false;
         }
     }
 
@@ -86,7 +98,7 @@ public class netChar : NetworkBehaviour {
                 rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
             }
         }
-        syncPos();
+        //syncPos();
     }
 
     void syncPos() {
