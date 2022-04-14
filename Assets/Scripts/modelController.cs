@@ -6,14 +6,25 @@ public class modelController:MonoBehaviour {
 
     public netChar player;
 
+    public GameObject e;
     public Transform ehead;
 
+    public GameObject c;
     public Transform chead;
 
     void Start() {
 
     }
 
+    public void updateShape() {
+        if (player.charshape.Value) {
+            e.SetActive(false);
+            c.SetActive(true);
+        } else {
+            e.SetActive(true);
+            c.SetActive(false);
+        }
+    }
     
     void Update() {
 

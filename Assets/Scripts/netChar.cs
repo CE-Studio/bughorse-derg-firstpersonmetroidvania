@@ -12,6 +12,7 @@ public class netChar : NetworkBehaviour {
     public AudioListener al;
     public SimpleCameraController sc;
     public CapsuleCollider col;
+    public modelController mc;
 
     public float jumpStrength = 4;
     public float xRotation = 0f;
@@ -45,6 +46,7 @@ public class netChar : NetworkBehaviour {
             col.height = 2.12f;
             camtf.localPosition = new Vector3(0, 1.92f, 0);
         }
+        mc.updateShape();
     }
 
     public void onPosUpdate(Vector3 last, Vector3 cur) {
@@ -136,36 +138,68 @@ public class netChar : NetworkBehaviour {
             transform.Rotate(Vector3.up * mouseX);
 
 
-            Vector3 mov;
             //float curspeed = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.y), 2));
-            if (freecamming) {
-                mov = Vector3.zero;
-            } else {
-                mov = (Input.GetAxisRaw("Horizontal") * transform.right) + (Input.GetAxisRaw("Vertical") * transform.forward);
+            if (!freecamming) {
+                Vector3 rvel = transform.InverseTransformDirection(rb.velocity);
+                if (ong) {
+                    if (Input.GetAxisRaw("Vertical") > 0.9f) {
+                        if (!(rvel.z > walkspeed)) {
+                            rvel.z += walkaccel * Time.deltaTime;
+                        }
+                    } else if (Input.GetAxisRaw("Vertical") < -0.9f) {
+                        if (!(rvel.z < -walkspeed)) {
+                            rvel.z -= walkaccel * Time.deltaTime;
+                        }
+                    }
+
+                    if (Input.GetAxisRaw("Horizontal") > 0.9f) {
+                        if (!(rvel.x > walkspeed)) {
+                            rvel.x += walkaccel * Time.deltaTime;
+                        }
+                    } else if (Input.GetAxisRaw("Horizontal") < -0.9f) {
+                        if (!(rvel.x < -walkspeed)) {
+                            rvel.x -= walkaccel * Time.deltaTime;
+                        }
+                    }
+                } else {
+                    if (Input.GetAxisRaw("Vertical") > 0.9f) {
+                        if (!(rvel.z > flyspeed)) {
+                            rvel.z += flyaccel * Time.deltaTime;
+                        }
+                    } else if (Input.GetAxisRaw("Vertical") < -0.9f) {
+                        if (!(rvel.z < -flyspeed)) {
+                            rvel.z -= flyaccel * Time.deltaTime;
+                        }
+                    }
+
+                    if (Input.GetAxisRaw("Horizontal") > 0.9f) {
+                        if (!(rvel.x > flyspeed)) {
+                            rvel.x += flyaccel * Time.deltaTime;
+                        }
+                    } else if (Input.GetAxisRaw("Horizontal") < -0.9f) {
+                        if (!(rvel.x < -flyspeed)) {
+                            rvel.x -= flyaccel * Time.deltaTime;
+                        }
+                    }
+                }
+                rb.velocity = transform.TransformDirection(rvel);
             }
 
-            if (ong) {
-                //    float targxspeed = (mov.x * walkspeed);
-                //if (Mathf.Abs(rb.velocity.x) - 0.1f < Mathf.Abs(targxspeed)) {
-                //    rb.velocity = new Vector3(targxspeed, rb.velocity.y, rb.velocity.z);
-                //}
-                //
-                //    float targzspeed = (mov.z * walkspeed);
-                //if (Mathf.Abs(rb.velocity.z) - 0.1f < Mathf.Abs(targzspeed)) {
-                //    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, targzspeed);
-                //}
-                rb.velocity = new Vector3(
-                    Mathf.Clamp(rb.velocity.x + (mov.x * walkaccel * Time.deltaTime), -walkspeed, walkspeed),
-                    rb.velocity.y,
-                    Mathf.Clamp(rb.velocity.z + (mov.z * walkaccel * Time.deltaTime), -walkspeed, walkspeed)
-                    );
-            } else {
-                rb.velocity = new Vector3(
-                    Mathf.Clamp(rb.velocity.x + (mov.x * flyaccel * Time.deltaTime), -flyspeed, flyspeed),
-                    rb.velocity.y,
-                    Mathf.Clamp(rb.velocity.z + (mov.z * flyaccel * Time.deltaTime), -flyspeed, flyspeed)
-                    );
-            }
+
+
+            //if (ong) {
+            //    rb.velocity = new Vector3(
+            //        Mathf.Clamp(rb.velocity.x + (mov.x * walkaccel * Time.deltaTime), -walkspeed, walkspeed),
+            //        rb.velocity.y,
+            //        Mathf.Clamp(rb.velocity.z + (mov.z * walkaccel * Time.deltaTime), -walkspeed, walkspeed)
+            //        );
+            //} else {
+            //    rb.velocity = new Vector3(
+            //        Mathf.Clamp(rb.velocity.x + (mov.x * flyaccel * Time.deltaTime), -flyspeed, flyspeed),
+            //        rb.velocity.y,
+            //        Mathf.Clamp(rb.velocity.z + (mov.z * flyaccel * Time.deltaTime), -flyspeed, flyspeed)
+            //        );
+            //}
         }
     }
 

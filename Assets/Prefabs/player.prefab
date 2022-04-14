@@ -340,6 +340,7 @@ MonoBehaviour:
   al: {fileID: 6313337547096435977}
   sc: {fileID: 6313337547096435976}
   col: {fileID: 6313337547408004277}
+  mc: {fileID: 753182074230106482}
   jumpStrength: 4
   xRotation: 0
   lookSensitivity: 8
@@ -406,7 +407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 9085152266568514399}
+  e: {fileID: 8684787520243974496}
   ehead: {fileID: 4252247872526758743}
+  c: {fileID: 8044023202418221271}
   chead: {fileID: 6837002358007531799}
 --- !u!1001 &8316855536828906496
 PrefabInstance:
@@ -465,6 +468,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c42d8a2d57b948048a819d909bb85f37, type: 3}
+--- !u!1 &8684787520243974496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 859616021236825440, guid: c42d8a2d57b948048a819d909bb85f37, type: 3}
+  m_PrefabInstance: {fileID: 8316855536828906496}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8344396675285195738 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 46769492851582938, guid: c42d8a2d57b948048a819d909bb85f37, type: 3}
@@ -532,6 +540,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ddf42b2d7541bc4ea169adc570f9b35, type: 3}
+--- !u!1 &8044023202418221271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1771829907170607063, guid: 9ddf42b2d7541bc4ea169adc570f9b35, type: 3}
+  m_PrefabInstance: {fileID: 8589720816217906944}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7271568298558569069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1431332439332054381, guid: 9ddf42b2d7541bc4ea169adc570f9b35, type: 3}
