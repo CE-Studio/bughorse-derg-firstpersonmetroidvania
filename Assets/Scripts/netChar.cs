@@ -10,6 +10,8 @@ public class netChar : NetworkBehaviour {
     public Transform camtf;
     public Rigidbody rb;
     public AudioListener al;
+    public SimpleCameraController sc;
+    public CapsuleCollider col;
 
     public float jumpStrength = 4;
     public float xRotation = 0f;
@@ -18,14 +20,32 @@ public class netChar : NetworkBehaviour {
     public float walkaccel = 75f;
     public float flyspeed = 2f;
     public float flyaccel = 15f;
+    
+    public bool freecamming = false;
+    private bool fctrack = false;
 
     public NetworkVariable<Vector3> pos = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> mom = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> rot = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> camrot = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> charshape = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private bool ong;
+
+    public void updateShape(bool last = false, bool cur = false) {
+        if (charshape.Value) {
+            col.center = new Vector3(0, 0.65f, 0);
+            col.radius = 0.29f;
+            col.height = 1.3f;
+            camtf.localPosition = new Vector3(0, 1.1f, 0);
+        } else {
+            col.center = new Vector3(0, 1.06f, 0);
+            col.radius = 0.4f;
+            col.height = 2.12f;
+            camtf.localPosition = new Vector3(0, 1.92f, 0);
+        }
+    }
 
     public void onPosUpdate(Vector3 last, Vector3 cur) {
         //rb.position = pos.Value;
@@ -56,17 +76,20 @@ public class netChar : NetworkBehaviour {
         if (IsOwner) {
             Cursor.lockState = CursorLockMode.Locked;
             rb.sleepThreshold = 0.0f;
+            charshape.Value = netActions.playmode;
         } else {
             pos.OnValueChanged += onPosUpdate;
             vel.OnValueChanged += onVelUpdate;
             mom.OnValueChanged += onAVelUpdate;
             rot.OnValueChanged += onRotUpdate;
             camrot.OnValueChanged += onCamRotUpdate;
+            charshape.OnValueChanged += updateShape;
             cam.targetTexture = otherVeiw;
             al.enabled = false;
             rb.isKinematic = true;
         }
         syncPos();
+        updateShape();
     }
 
     //void Start() {
@@ -81,6 +104,26 @@ public class netChar : NetworkBehaviour {
 
     void Update() {
         if (IsOwner) {
+
+            if (Input.GetAxisRaw("freecam") > 0.9f) {
+                if (fctrack) {
+
+                } else {
+                    fctrack = true;
+                    freecamming = !freecamming;
+                    sc.enabled = freecamming;
+                    if (freecamming) {
+                        Cursor.lockState = CursorLockMode.None;
+                    } else {
+                        Cursor.lockState = CursorLockMode.Locked;
+                        updateShape();
+                        camtf.localEulerAngles = Vector3.zero;
+                    }
+                }
+            } else {
+                fctrack = false;
+            }
+
             float mouseX = Input.GetAxis("Mouse X") * lookSensitivity;
             float mouseY = Input.GetAxis("Mouse Y") * lookSensitivity;
 
@@ -92,8 +135,14 @@ public class netChar : NetworkBehaviour {
             }
             transform.Rotate(Vector3.up * mouseX);
 
+
+            Vector3 mov;
             //float curspeed = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.y), 2));
-            Vector3 mov = (Input.GetAxisRaw("Horizontal") * transform.right) + (Input.GetAxisRaw("Vertical") * transform.forward);
+            if (freecamming) {
+                mov = Vector3.zero;
+            } else {
+                mov = (Input.GetAxisRaw("Horizontal") * transform.right) + (Input.GetAxisRaw("Vertical") * transform.forward);
+            }
 
             if (ong) {
                 //    float targxspeed = (mov.x * walkspeed);

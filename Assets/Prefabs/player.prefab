@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 5791220567419728891}
   - component: {fileID: 9085152266568514399}
   m_Layer: 0
-  m_Name: local player
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,6 +440,8 @@ MonoBehaviour:
   camtf: {fileID: 6313337547096435974}
   rb: {fileID: 6313337547408004278}
   al: {fileID: 6313337547096435977}
+  sc: {fileID: 6313337547096435976}
+  col: {fileID: 6313337547408004277}
   jumpStrength: 4
   xRotation: 0
   lookSensitivity: 8
@@ -447,6 +449,7 @@ MonoBehaviour:
   walkaccel: 75
   flyspeed: 2
   flyaccel: 15
+  freecamming: 0
   pos:
     m_InternalValue: {x: 0, y: 0, z: 0}
   vel:
@@ -457,3 +460,5 @@ MonoBehaviour:
     m_InternalValue: {x: 0, y: 0, z: 0}
   camrot:
     m_InternalValue: {x: 0, y: 0, z: 0}
+  charshape:
+    m_InternalValue: 0
