@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3496488961888991707
 Transform:
   m_ObjectHideFlags: 0
@@ -413,12 +413,16 @@ MonoBehaviour:
   erarm: {fileID: 2715869189136683113}
   elleg: {fileID: 8902598482467587245}
   erleg: {fileID: 8834785599606263479}
+  elwing: {fileID: 0}
+  erwing: {fileID: 0}
   c: {fileID: 8044023202418221271}
   chead: {fileID: 6837002358007531799}
   clarm: {fileID: 2393028009950472798}
   crarm: {fileID: 3380549547071268438}
   clleg: {fileID: 2322773509090571108}
   crleg: {fileID: 1939415378377185855}
+  clwing: {fileID: 0}
+  crwing: {fileID: 0}
 --- !u!1001 &8316855536828906496
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -34,6 +34,8 @@ public class netChar:NetworkBehaviour {
 
     private bool ong;
 
+    public static netChar localplayer;
+
     public void updateShape(bool last = false, bool cur = false) {
         if (charshape.Value) {
             col.center = new Vector3(0, 0.65f, 0);
@@ -76,9 +78,11 @@ public class netChar:NetworkBehaviour {
 
     public override void OnNetworkSpawn() {
         if (IsOwner) {
+            localplayer = this;
             Cursor.lockState = CursorLockMode.Locked;
             rb.sleepThreshold = 0.0f;
             charshape.Value = netActions.playmode;
+            mapcon.log("Loaded local player.");
         } else {
             pos.OnValueChanged += onPosUpdate;
             vel.OnValueChanged += onVelUpdate;
@@ -89,6 +93,7 @@ public class netChar:NetworkBehaviour {
             cam.targetTexture = otherVeiw;
             al.enabled = false;
             rb.isKinematic = true;
+            mapcon.log("Loaded remote player.");
         }
         syncPos();
         updateShape();

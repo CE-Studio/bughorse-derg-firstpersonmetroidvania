@@ -70,7 +70,7 @@ public class modelController:MonoBehaviour {
         float camXRot = player.camtf.localEulerAngles.x;
         Vector3 hrot = new Vector3(camXRot < 180 ? -Mathf.Clamp(camXRot, 0, 50) : -Mathf.Clamp(camXRot, 310, 360), 0, 0);
 
-        float limbrot = Mathf.Sin(cycletime * 6) * (player.curspeed * 6);
+        float limbrot = Mathf.Sin(cycletime * 8) * (player.curspeed * 6);
 
         Vector3 posrot = new Vector3(limbrot, 0, 0);
         Vector3 negrot = new Vector3(-limbrot, 0, 0);
