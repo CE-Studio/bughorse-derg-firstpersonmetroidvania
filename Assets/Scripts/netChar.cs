@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class netChar : NetworkBehaviour {
+public class netChar:NetworkBehaviour {
 
     public RenderTexture otherVeiw;
     public Camera cam;
@@ -21,7 +21,7 @@ public class netChar : NetworkBehaviour {
     public float walkaccel = 75f;
     public float flyspeed = 2f;
     public float flyaccel = 15f;
-    
+
     public bool freecamming = false;
     private bool fctrack = false;
 
@@ -116,6 +116,7 @@ public class netChar : NetworkBehaviour {
                     sc.enabled = freecamming;
                     if (freecamming) {
                         Cursor.lockState = CursorLockMode.None;
+                        cam.cullingMask = 0b111111;
                     } else {
                         Cursor.lockState = CursorLockMode.Locked;
                         updateShape();
@@ -137,8 +138,6 @@ public class netChar : NetworkBehaviour {
             }
             transform.Rotate(Vector3.up * mouseX);
 
-
-            //float curspeed = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.y), 2));
             if (!freecamming) {
                 Vector3 rvel = transform.InverseTransformDirection(rb.velocity);
                 if (ong) {
@@ -184,22 +183,6 @@ public class netChar : NetworkBehaviour {
                 }
                 rb.velocity = transform.TransformDirection(rvel);
             }
-
-
-
-            //if (ong) {
-            //    rb.velocity = new Vector3(
-            //        Mathf.Clamp(rb.velocity.x + (mov.x * walkaccel * Time.deltaTime), -walkspeed, walkspeed),
-            //        rb.velocity.y,
-            //        Mathf.Clamp(rb.velocity.z + (mov.z * walkaccel * Time.deltaTime), -walkspeed, walkspeed)
-            //        );
-            //} else {
-            //    rb.velocity = new Vector3(
-            //        Mathf.Clamp(rb.velocity.x + (mov.x * flyaccel * Time.deltaTime), -flyspeed, flyspeed),
-            //        rb.velocity.y,
-            //        Mathf.Clamp(rb.velocity.z + (mov.z * flyaccel * Time.deltaTime), -flyspeed, flyspeed)
-            //        );
-            //}
         }
     }
 
@@ -235,4 +218,11 @@ public class netChar : NetworkBehaviour {
     bool isGrounded() {
         return Physics.Raycast(transform.position + Vector3.up, -Vector3.up, 1.01f);
     }
+
+    public float curspeed {
+        get {
+            return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.z), 2));
+        }
+    }
+
 }
