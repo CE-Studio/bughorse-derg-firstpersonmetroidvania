@@ -26,7 +26,7 @@ public class netChar:NetworkBehaviour {
     private bool fctrack = false;
 
     //public NetworkVariable<Vector3> pos = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    //public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Vector3> vel = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     //public NetworkVariable<Vector3> mom = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     //public NetworkVariable<Vector3> rot = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Vector3> camrot = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -60,9 +60,9 @@ public class netChar:NetworkBehaviour {
             ));
     }
 
-    //public void onVelUpdate(Vector3 last, Vector3 cur) {
-    //    rb.velocity = vel.Value;
-    //}
+    public void onVelUpdate(Vector3 last, Vector3 cur) {
+        rb.velocity = vel.Value;
+    }
 
     //public void onAVelUpdate(Vector3 last, Vector3 cur) {
     //    rb.angularVelocity = mom.Value;
@@ -85,7 +85,7 @@ public class netChar:NetworkBehaviour {
             mapcon.log("Loaded local player.");
         } else {
             //pos.OnValueChanged += onPosUpdate;
-            //vel.OnValueChanged += onVelUpdate;
+            vel.OnValueChanged += onVelUpdate;
             //mom.OnValueChanged += onAVelUpdate;
             //rot.OnValueChanged += onRotUpdate;
             camrot.OnValueChanged += onCamRotUpdate;
@@ -208,13 +208,13 @@ public class netChar:NetworkBehaviour {
     void syncPos() {
         if (IsOwner) {
             //pos.Value = rb.position;
-            //vel.Value = rb.velocity;
+            vel.Value = rb.velocity;
             //vel.Value = rb.angularVelocity;
             //rot.Value = rb.rotation.eulerAngles;
             camrot.Value = camtf.rotation.eulerAngles;
         } else {
             //rb.position = pos.Value;
-            //rb.velocity = vel.Value;
+            rb.velocity = vel.Value;
             //rb.angularVelocity = mom.Value;
             //rb.rotation = Quaternion.Euler(rot.Value);
         }
