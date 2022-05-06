@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 6313337547408004278}
   - component: {fileID: 5791220567419728891}
   - component: {fileID: 9085152266568514399}
-  - component: {fileID: 8103068918506800996}
+  - component: {fileID: 1504522429301031110}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -350,19 +350,13 @@ MonoBehaviour:
   flyspeed: 2
   flyaccel: 15
   freecamming: 0
-  pos:
-    m_InternalValue: {x: 0, y: 0, z: 0}
   vel:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  mom:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  rot:
     m_InternalValue: {x: 0, y: 0, z: 0}
   camrot:
     m_InternalValue: {x: 0, y: 0, z: 0}
   charshape:
     m_InternalValue: 0
---- !u!114 &8103068918506800996
+--- !u!114 &1504522429301031110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -371,7 +365,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6313337547408004280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 54c9647dc784a46bca664910f182491e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
