@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cmdprocessor : MonoBehaviour
-{
+public class cmdprocessor:MonoBehaviour {
     static cmdprocessor cmd;
-    
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         cmd = this;
     }
 
@@ -55,8 +53,7 @@ public class cmdprocessor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 }
