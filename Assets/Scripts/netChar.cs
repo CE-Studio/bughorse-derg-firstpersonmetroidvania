@@ -51,14 +51,14 @@ public class netChar:NetworkBehaviour {
         mc.updateShape();
     }
 
-    public void onPosUpdate(Vector3 last, Vector3 cur) {
-        //rb.position = pos.Value;
-        rb.MovePosition(new Vector3(
-                rb.position.x + ((cur.x - rb.position.x) / 2),
-                rb.position.y + ((cur.y - rb.position.y) / 2),
-                rb.position.z + ((cur.z - rb.position.z) / 2)
-            ));
-    }
+    //public void onPosUpdate(Vector3 last, Vector3 cur) {
+    //    rb.position = pos.Value;
+    //    rb.MovePosition(new Vector3(
+    //            rb.position.x + ((cur.x - rb.position.x) / 2),
+    //            rb.position.y + ((cur.y - rb.position.y) / 2),
+    //            rb.position.z + ((cur.z - rb.position.z) / 2)
+    //        ));
+    //}
 
     public void onVelUpdate(Vector3 last, Vector3 cur) {
         rb.velocity = vel.Value;
@@ -226,7 +226,7 @@ public class netChar:NetworkBehaviour {
 
     public float curspeed {
         get {
-            return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(rb.velocity.x), 2) + Mathf.Pow(Mathf.Abs(rb.velocity.z), 2));
+            return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(vel.Value.x), 2) + Mathf.Pow(Mathf.Abs(vel.Value.z), 2));
         }
     }
 
