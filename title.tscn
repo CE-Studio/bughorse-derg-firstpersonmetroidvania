@@ -1,4 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cetxhn28rjqci"]
+[gd_scene load_steps=6 format=3 uid="uid://cetxhn28rjqci"]
+
+[ext_resource type="Script" path="res://scripts/titleControl.gd" id="1_4mjwp"]
+[ext_resource type="Script" path="res://scripts/multimanager.gd" id="1_r34jh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bq06g"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,6 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4mjwp")
 
 [node name="CenterContainer" type="CenterContainer" parent="Control"]
 layout_mode = 1
@@ -83,7 +87,7 @@ max_value = 65535.0
 value = 8989.0
 rounded = true
 
-[node name="Button" type="Button" parent="Control/CenterContainer/TabContainer/Join"]
+[node name="join" type="Button" parent="Control/CenterContainer/TabContainer/Join"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Join"
@@ -106,6 +110,12 @@ max_value = 65535.0
 value = 8989.0
 rounded = true
 
-[node name="Button" type="Button" parent="Control/CenterContainer/TabContainer/Host"]
+[node name="host" type="Button" parent="Control/CenterContainer/TabContainer/Host"]
 layout_mode = 2
 text = "Host"
+
+[node name="MultiManager" type="Node" parent="."]
+script = ExtResource("1_r34jh")
+
+[connection signal="pressed" from="Control/CenterContainer/TabContainer/Join/join" to="Control" method="_on_join_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/TabContainer/Host/host" to="Control" method="_on_host_pressed"]
