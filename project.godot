@@ -15,6 +15,10 @@ run/main_scene="res://title.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Persist="*res://scripts/persist.gd"
+
 [rendering]
 
 anti_aliasing/quality/msaa_2d=1

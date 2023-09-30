@@ -12,7 +12,11 @@ func _process(delta):
 
 
 func _on_host_pressed():
-    MultiManager.mhost()
+    var error = MultiManager.mhost()
+    if error == OK:
+        hide()
+    else:
+        print(error)
 
 
 func _on_join_pressed():
