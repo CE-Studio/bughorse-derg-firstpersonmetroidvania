@@ -64,8 +64,8 @@ static func server_disconnected():
 static func peer_connected(id:int):
     dlog("connected:" + str(id))
     if Statics.multiplayer.is_server():
+        Persist.setid.rpc(id)
         Persist.negotiate_char.rpc(Persist.Char.Request)
-        Persist.startgame.rpc()
     
 
 static func peer_disconnected(id:int):

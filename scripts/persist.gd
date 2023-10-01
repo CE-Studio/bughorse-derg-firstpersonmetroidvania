@@ -9,14 +9,27 @@ enum Char {
 
 
 var character:Char
-
+var id:int
 
 var _charsel:OptionButton
 
 
 @rpc("authority", "call_remote", "reliable")
+func setid(i:int):
+    id = i
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func akchar():
+    if Statics.multiplayer.is_server():
+        startgame.rpc()
+
+
+@rpc("authority", "call_remote", "reliable")
 func setchar(char:Char):
     MultiManager.dlog(Char.find_key(char))
+    if !Statics.multiplayer.is_server():
+        akchar.rpc()
 
 
 @rpc("authority", "call_local", "reliable")
@@ -33,8 +46,8 @@ func negotiate_char(char:Char):
             setchar(Char.Epsilon)
             setchar.rpc(Char.Clarence)
         else:
-            setchar.rpc(Char.Epsilon)
             setchar(Char.Clarence)
+            setchar.rpc(Char.Epsilon)
     else:
         assert(char == Char.Request, "Server already knows character but is trying to negotiate!")
         var tosel:Char = _charsel.selected  as Char
