@@ -60,13 +60,13 @@ text = "Character:"
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 3
-selected = 0
-popup/item_0/text = "Random"
-popup/item_0/id = 2
-popup/item_1/text = "Clarence"
-popup/item_1/id = 0
-popup/item_2/text = "Epsilon"
-popup/item_2/id = 1
+selected = 2
+popup/item_0/text = "Clarence"
+popup/item_0/id = 0
+popup/item_1/text = "Epsilon"
+popup/item_1/id = 1
+popup/item_2/text = "Random"
+popup/item_2/id = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/CenterContainer/TabContainer/Join"]
 layout_mode = 2
