@@ -44,10 +44,12 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/CenterContainer"]
 layout_mode = 2
+current_tab = 0
 use_hidden_tabs_for_min_size = true
 
 [node name="Join" type="VBoxContainer" parent="Control/CenterContainer/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CenterContainer/TabContainer/Join"]
 layout_mode = 2
@@ -59,8 +61,8 @@ text = "Character:"
 [node name="OptionButton" type="OptionButton" parent="Control/CenterContainer/TabContainer/Join/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 3
 selected = 2
+item_count = 3
 popup/item_0/text = "Clarence"
 popup/item_0/id = 0
 popup/item_1/text = "Epsilon"
@@ -95,6 +97,7 @@ text = "Join"
 [node name="Host" type="VBoxContainer" parent="Control/CenterContainer/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CenterContainer/TabContainer/Host"]
 layout_mode = 2
